@@ -1,0 +1,8 @@
+.env
+.idea
+uploads
+dist
+build
+.DS_Store
+__pycache__/
+server/__pycache__/

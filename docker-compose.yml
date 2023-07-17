@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  server:
+    build: .
+    container_name: aigenml-server
+    ports:
+      - "5001:5001"
+    stdin_open: true
+    tty: true
+    env_file:
+      - .env

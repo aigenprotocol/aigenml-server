@@ -1,0 +1,9 @@
+flask
+flask-cors
+Flask-SQLAlchemy
+Flask-Migrate
+SQLAlchemy-serializer
+python-dotenv
+rq
+redis
+uWSGI
