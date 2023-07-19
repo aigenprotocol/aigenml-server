@@ -29,8 +29,7 @@ class Globals(object):
         Create app
         """
         app = Flask(__name__)
-        from aigenml.config import MODELS_DIR
-        from server.config import UPLOAD_FOLDER
+        from server.config import MODELS_DIR, UPLOAD_FOLDER
         app.config['SECRET_KEY'] = 'your secret key'
         app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
         app.config['MODEL_FOLDER'] = MODELS_DIR
