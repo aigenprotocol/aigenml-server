@@ -4,7 +4,7 @@ services:
     build: .
     container_name: aigenml-server
     ports:
-      - "5001:5001"
+      - "5000:5000"
     stdin_open: true
     tty: true
     env_file:

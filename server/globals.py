@@ -20,19 +20,17 @@ class Globals(object):
         self._redis = Redis()
         self._q = Queue(connection=self._redis)
         print("Flask app:", self.app)
-        from server.config import UPLOAD_FOLDER
-        os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-        os.makedirs(self._app.config['MODEL_FOLDER'], exist_ok=True)
+        os.makedirs(self._app.config['UPLOAD_FOLDER'], exist_ok=True)
+        os.makedirs(self._app.config['PROJECTS_DIR'], exist_ok=True)
 
     def create_app(self):
         """
         Create app
         """
         app = Flask(__name__)
-        from server.config import MODELS_DIR, UPLOAD_FOLDER
         app.config['SECRET_KEY'] = 'your secret key'
-        app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-        app.config['MODEL_FOLDER'] = MODELS_DIR
+        app.config['UPLOAD_FOLDER'] = os.environ.get("UPLOAD_FOLDER")
+        app.config['PROJECTS_DIR'] = os.environ.get("PROJECTS_DIR")
         app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000 * 1000
         app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("SQLALCHEMY_DATABASE_URI")
         self._db.init_app(app)

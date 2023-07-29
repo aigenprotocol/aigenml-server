@@ -25,24 +25,27 @@ def create_project_shards():
             return {"status": "failure",
                     "message": "Required values are missing"}
 
-        model_name = f"{slugify(project_name)}_{project_id}"
+        project_name = slugify(project_name)
+        project_name1 = f"{slugify(project_name)}_{project_id}"
+        project_dir = os.path.join(g.app.config['PROJECTS_DIR'], project_name1)
         response = save_files(request)
         if response['status'] == "success":
-            job = g.q.enqueue(save_model_create_shards, model_name=model_name, model_dir=g.app.config['MODEL_FOLDER'],
+            job = g.q.enqueue(save_model_create_shards, project_name=project_name,
+                              project_dir=project_dir,
                               model_path=response['model_file_path'], no_of_ainfts=int(no_of_ainfts))
 
             # create project if not exists
             projects = AIProject.query.filter_by(id=project_id).all()
             if len(projects) == 0:
                 project = AIProject(id=project_id, name=project_name,
-                                    model_dir=os.path.join(g.app.config['MODEL_FOLDER'], model_name),
+                                    model_dir=project_dir,
                                     no_of_ainfts=int(no_of_ainfts), progress=0, job_id=job.id,
                                     status="Created")
                 g.db.session.add(project)
                 g.db.session.commit()
             else:
                 project = projects[0]
-                project.model_dir = os.path.join(g.app.config['MODEL_FOLDER'], model_name)
+                project.model_dir = project_dir
                 project.no_of_ainfts = int(no_of_ainfts)
                 project.job_id = job.id
 
