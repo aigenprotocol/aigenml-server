@@ -14,6 +14,7 @@ class AIProject(g.db.Model, SerializerMixin):
     status = g.db.Column(g.db.String)
     progress = g.db.Column(g.db.Integer)
     job_id = g.db.Column(g.db.Integer)
+    ainfts_linked = g.db.Column(g.db.Boolean, default=False)
     created_date = g.db.Column(g.db.DateTime, default=datetime.datetime.utcnow)
 
 
@@ -24,4 +25,5 @@ class AINFT(g.db.Model, SerializerMixin):
     project_id = g.db.Column(g.db.Integer, g.db.ForeignKey('aiproject.id'),
                              nullable=False)
     job_id = g.db.Column(g.db.Integer)
+    token_id = g.db.Column(g.db.Integer)
     created_date = g.db.Column(g.db.DateTime, default=datetime.datetime.utcnow)
