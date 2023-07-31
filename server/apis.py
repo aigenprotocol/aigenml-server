@@ -30,7 +30,7 @@ def create_project_shards():
         project_dir = os.path.join(g.app.config['PROJECTS_DIR'], project_name1)
         response = save_files(request)
         if response['status'] == "success":
-            job = g.q.enqueue(save_model_create_shards, project_name=project_name,
+            job = g.q.enqueue(save_model_create_shards, project_name=project_name, project_id=project_id,
                               project_dir=project_dir,
                               model_path=response['model_file_path'], no_of_ainfts=int(no_of_ainfts))
 
